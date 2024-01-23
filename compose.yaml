@@ -23,6 +23,26 @@ services:
         - postgres-api-payments
     networks:
       - hexafood-bridge
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - '4566-4597:4566-4597'
+    environment:
+      - AWS_ACCESS_KEY_ID=dummy
+      - AWS_SECRET_ACCESS_KEY=dummy
+      - AWS_DEFAULT_REGION=us-east-1
+      - DEBUG=1
+      - LOCALSTACK_PERSISTENCE=1
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - SQS_ENDPOINT_STRATEGY=path
+      - HOSTNAME_EXTERNAL=localstack
+    volumes:
+      - "./docker/localstack:/var/lib/localstack"
+      - ./docker/start-localstack.sh:/etc/localstack/init/ready.d/start-localstack.sh
+    networks:
+      - hexafood-bridge
 networks:
   hexafood-bridge:
     driver: bridge
