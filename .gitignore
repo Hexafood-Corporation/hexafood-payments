@@ -1,0 +1,7 @@
+.gradle/
+.idea/
+build/
+docker/localstack/
+gradle/
+gradlew
+gradlew.bat
