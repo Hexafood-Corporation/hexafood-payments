@@ -21,6 +21,7 @@ services:
       - 8080:8080
     depends_on:
         - postgres-api-payments
+        - localstack
     networks:
       - hexafood-bridge
   localstack:
