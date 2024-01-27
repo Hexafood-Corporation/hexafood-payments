@@ -27,7 +27,6 @@ class PaymentController(
 
     @PostMapping("/v1/payments")
     fun create(@RequestBody request: CreatePaymentRequest): ResponseEntity<CreatePaymentResponse> {
-        val order = request.codigoPedido
 
         val payment = createPaymentUseCase.save(request.toPayment()).toPaymentResponse()
         return ResponseEntity.status(HttpStatus.CREATED).body(CreatePaymentResponse(payment.paymentId))
