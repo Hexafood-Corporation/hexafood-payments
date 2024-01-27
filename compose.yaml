@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.8"
 
 services:
   postgres-api-payments:
@@ -10,40 +10,36 @@ services:
       - .env
     networks:
       - hexafood-bridge
-  api-payments:
-    container_name: hexafood-api-payments
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    ports:
-      - 8080:8080
-    depends_on:
-        - postgres-api-payments
-        - localstack
-    networks:
-      - hexafood-bridge
+#  api-payments:
+#    container_name: hexafood-api-payments
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    env_file:
+#      - .env
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#        - postgres-api-payments
+#        - localstack
+#    networks:
+#    - hexafood-bridge
   localstack:
-    image: localstack/localstack:latest
+    container_name: localstack
+    image: localstack/localstack
     ports:
-      - '4566-4597:4566-4597'
+      - "4566:4566"            # LocalStack Gateway
     environment:
-      - AWS_ACCESS_KEY_ID=dummy
-      - AWS_SECRET_ACCESS_KEY=dummy
-      - AWS_DEFAULT_REGION=us-east-1
       - DEBUG=1
-      - LOCALSTACK_PERSISTENCE=1
       - SERVICES=sqs
       - DEFAULT_REGION=us-east-1
-      - EDGE_PORT=4566
-      - SQS_ENDPOINT_STRATEGY=path
-      - HOSTNAME_EXTERNAL=localstack
     volumes:
-      - "./docker/localstack:/var/lib/localstack"
-      - ./docker/start-localstack.sh:/etc/localstack/init/ready.d/start-localstack.sh
+      - "./docker:/docker-entrypoint-initaws.d"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./docker/start-localstack.sh:/etc/localstack/init/ready.d/start-localstack.sh"
     networks:
       - hexafood-bridge
+
 networks:
   hexafood-bridge:
     driver: bridge

@@ -1,35 +1,13 @@
-version: '3.1'
+version: '3.9'
 
 services:
-
-  db:
-    hostname: db
-    image: postgres:15.3-alpine3.18
-    restart: always
+  postgres:
+    image: postgres:14-alpine
     ports:
       - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    networks:
-      - techchallenge
-
-  server:
-    hostname: server
-    image: cezaodabahia/1soattechchallenge:latest
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    restart: on-failure
-    ports:
-      - 8080:8080
-    networks:
-      - techchallenge
-    depends_on:
-      - db
-
-networks:
-  techchallenge:
-    driver: bridge
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=citizix_user
+      - POSTGRES_DB=citizix_db
