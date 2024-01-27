@@ -1,5 +1,6 @@
 package br.com.fiap.application.core.usecase
 
+import br.com.fiap.application.core.domain.Payment
 import br.com.fiap.application.ports.`in`.IPaymentStatusManagerUseCase
 import br.com.fiap.application.ports.out.IPaymentPersistence
 

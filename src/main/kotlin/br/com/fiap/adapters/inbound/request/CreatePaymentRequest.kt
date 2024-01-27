@@ -14,14 +14,13 @@ data class CreatePaymentRequest(
 
     fun toPayment(): Payment {
         return Payment(
-            status = PaymentStatus.IN_PROCESS,
+            status = PaymentStatus.getStatus(status),
             paymentMethod = PaymentMethod.PIX,
             order = codigoPedido,
             clientId = cliente.id
         )
     }
 }
-
 
 data class Cliente(
     val id: Long,
