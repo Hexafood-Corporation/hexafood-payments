@@ -21,6 +21,9 @@ data class PaymentEntity(
 
     val status: String = PaymentStatus.IN_PROCESS.toString(),
 
+    @Column(nullable = false)
+    val clientId: Long,
+
     @CreationTimestamp
     val statusUpdatedAt: LocalDateTime? = null,
 
@@ -39,7 +42,9 @@ data class PaymentEntity(
             order,
             PaymentStatus.valueOf(status),
             statusUpdatedAt = statusUpdatedAt,
-            PaymentMethod.valueOf(paymentMethod),
+            clientId = clientId,
+            paymentMethod = PaymentMethod.valueOf(paymentMethod),
+
         )
     }
 
@@ -72,6 +77,7 @@ fun Payment.toEntity(): PaymentEntity {
         id = id,
         paymentId = paymentId,
         order = order!!,
+        clientId = clientId!!,
         statusUpdatedAt = statusUpdatedAt,
         status = status.toString(),
         paymentMethod = paymentMethod.toString()

@@ -5,18 +5,29 @@ import br.com.fiap.application.core.enums.PaymentMethod
 import br.com.fiap.application.core.enums.PaymentStatus
 
 data class CreatePaymentRequest(
-    val orderId: String? = null
+    val id: Long,
+    val codigoPedido: String,
+    val valorTotal: Double,
+    val status: String,
+    val cliente: Cliente
 ) {
 
-    fun toPayment(order: String): Payment {
+    fun toPayment(): Payment {
         return Payment(
             status = PaymentStatus.IN_PROCESS,
-            paymentMethod = PaymentMethod.CASH,
-            order = order
+            paymentMethod = PaymentMethod.PIX,
+            order = codigoPedido,
+            clientId = cliente.id
         )
     }
 }
 
+
+data class Cliente(
+    val id: Long,
+    val nome: String,
+    val cpf: String
+)
 data class CreatePaymentResponse(
     val paymentId: String
 )

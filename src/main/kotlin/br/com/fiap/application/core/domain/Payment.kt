@@ -9,6 +9,7 @@ data class Payment(
     val paymentId: String? = null,
     val order: String? = null,
     var status: PaymentStatus? = PaymentStatus.IN_PROCESS,
+    var clientId: Long? = null,
     var statusUpdatedAt: LocalDateTime? = null,
     val paymentMethod: PaymentMethod? = null,
 ) {
