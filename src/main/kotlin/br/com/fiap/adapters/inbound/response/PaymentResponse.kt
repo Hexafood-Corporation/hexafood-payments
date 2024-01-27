@@ -14,14 +14,18 @@ data class PaymentResponse(
     @JsonProperty("id_pedido")
     val orderId: String,
 
-    val status: PaymentStatus,
+    val status: String,
+
+    @JsonProperty("update_at")
     val statusUpdatedAt: LocalDateTime? = null,
+
+    @JsonProperty("metodo_pagamento")
     val paymentMethod: PaymentMethod = PaymentMethod.PIX,
 )
 
 fun Payment.toPaymentResponse() = PaymentResponse(
     paymentId = paymentId!!,
-    status = status!!,
+    status = status!!.prBrStatus,
     statusUpdatedAt = statusUpdatedAt,
     paymentMethod = paymentMethod!!,
     orderId = order!!

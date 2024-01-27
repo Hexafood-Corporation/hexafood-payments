@@ -3,6 +3,7 @@ package br.com.fiap.adapters.outbound.service
 import br.com.fiap.adapters.inbound.entity.toEntity
 import br.com.fiap.adapters.outbound.repository.IPaymentRepository
 import br.com.fiap.application.core.domain.Payment
+import br.com.fiap.application.core.enums.PaymentStatus
 import br.com.fiap.application.ports.out.IPaymentPersistence
 import org.springframework.stereotype.Service
 
@@ -39,5 +40,7 @@ class PaymentPersistenceImpl(
             paymentRepository.save(payment.toEntity())
         }    }
 
+    override fun findByStatus(status: PaymentStatus): List<Payment> =
+        paymentRepository.findByStatus(status.name).mapNotNull { it?.toPayment() }
 
 }

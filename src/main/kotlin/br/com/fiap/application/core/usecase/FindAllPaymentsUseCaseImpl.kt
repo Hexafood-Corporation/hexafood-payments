@@ -10,5 +10,4 @@ class FindAllPaymentsUseCaseImpl(
 
     override fun findAll(): List<Payment> =
         paymentPersistence.findAll()
-
 }
