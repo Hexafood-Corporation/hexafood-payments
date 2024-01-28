@@ -2,6 +2,7 @@ package br.com.fiap.application.core.domain
 
 import br.com.fiap.application.core.enums.PaymentMethod
 import br.com.fiap.application.core.enums.PaymentStatus
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 data class Payment(
@@ -12,6 +13,7 @@ data class Payment(
     var clientId: Long? = null,
     var statusUpdatedAt: LocalDateTime? = null,
     val paymentMethod: PaymentMethod? = null,
+    val totalValue: BigDecimal? = null
 ) {
 
     fun updateToApprovedStatus() {

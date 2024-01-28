@@ -5,6 +5,7 @@ import br.com.fiap.application.core.enums.PaymentMethod
 import br.com.fiap.application.core.enums.PaymentStatus
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
 
@@ -16,7 +17,7 @@ data class PaymentEntity(
     val id: Int? = null,
     var paymentId: String? = null,
 
-    @Column(name="order_id", nullable = false)
+    @Column(name="order_id",unique=true, nullable = false)
     val order: String,
 
     val status: String = PaymentStatus.IN_PROCESS.toString(),
@@ -28,6 +29,8 @@ data class PaymentEntity(
     val statusUpdatedAt: LocalDateTime? = null,
 
     val paymentMethod: String,
+
+    val totalValue: BigDecimal
 
     ) {
     @PrePersist
@@ -44,6 +47,7 @@ data class PaymentEntity(
             statusUpdatedAt = statusUpdatedAt,
             clientId = clientId,
             paymentMethod = PaymentMethod.valueOf(paymentMethod),
+            totalValue = totalValue
 
         )
     }
@@ -80,6 +84,7 @@ fun Payment.toEntity(): PaymentEntity {
         clientId = clientId!!,
         statusUpdatedAt = statusUpdatedAt,
         status = status.toString(),
-        paymentMethod = paymentMethod.toString()
+        paymentMethod = paymentMethod.toString(),
+        totalValue = totalValue!!
     )
 }

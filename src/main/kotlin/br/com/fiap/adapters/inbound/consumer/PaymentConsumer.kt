@@ -15,10 +15,14 @@ class PaymentConsumer(
 
     @SqsListener("novo_pedido")
     fun onMessage(order: CreatePaymentRequest) {
-        logger.info("**** Receiving message from queue novo_pedido with order_id=${order.id}****")
+        try {
+            logger.info("**** Receiving message from queue novo_pedido with order_id=${order.codigoPedido}****")
 
-        createPaymentUseCase.save(order.toPayment())
+            createPaymentUseCase.save(order.toPayment()).runCatching {  }
 
-        logger.info("**** message data was saved in database ****")
+            logger.info("**** message from novo_pedido with order_id=${order.codigoPedido} was saved in database ****")
+        } catch (e: Exception) {
+            logger.info("**** message wasn't save, because the order_id=${order.codigoPedido} already exist! ****")
+        }
     }
 }

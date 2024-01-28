@@ -26,13 +26,21 @@ services:
     - hexafood-bridge
   localstack:
     container_name: localstack
+    hostname: localstack
     image: localstack/localstack
     ports:
       - "4566:4566"
     environment:
+      - AWS_ACCESS_KEY_ID=dummy
+      - AWS_SECRET_ACCESS_KEY=dummy
+      - AWS_DEFAULT_REGION=us-east-1
       - DEBUG=1
+      - LOCALSTACK_PERSISTENCE=1
       - SERVICES=sqs
       - DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - SQS_ENDPOINT_STRATEGY=standard
+      - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
       - "./docker:/docker-entrypoint-initaws.d"
       - "/var/run/docker.sock:/var/run/docker.sock"
