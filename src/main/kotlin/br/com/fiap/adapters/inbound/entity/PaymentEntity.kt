@@ -53,25 +53,22 @@ data class PaymentEntity(
     }
 
 
-    final override fun hashCode(): Int = javaClass.hashCode()
-
-    @Override
-    override fun toString(): String {
-        return this::class.simpleName + "(id = $id )"
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as PaymentEntity
 
-        if (id != other) return false
-        if (paymentId != other.paymentId) return false
-        if (order != other.order) return false
-        if (status != other.status) return false
-        if (statusUpdatedAt != other.statusUpdatedAt) return false
-        return paymentMethod == other.paymentMethod
+        return id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
+    @Override
+    override fun toString(): String {
+        return this::class.simpleName + "(id = $id )"
     }
 
 }

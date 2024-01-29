@@ -22,7 +22,6 @@ class PaymentStatusManagerUseCaseImplTest {
 
         every { paymentPersistence.updateToApprovedStatus(capture(capturedId)) } answers {
             payment.status = PaymentStatus.APPROVED
-            true
         }
 
         paymentStatusManagerUseCase.updateToApprovedStatus(paymentId)
@@ -42,7 +41,6 @@ class PaymentStatusManagerUseCaseImplTest {
 
         every { paymentPersistence.updateToRefusedStatus(capture(capturedId)) } answers {
             payment.status = PaymentStatus.REFUSED
-            true
         }
 
         paymentStatusManagerUseCase.updateToRefusedStatus(paymentId)
