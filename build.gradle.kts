@@ -63,7 +63,9 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-val excludePackage: Iterable<String> = listOf()
+val excludePackage: Iterable<String> = listOf(
+    "**/br/com/fiap/config/**"
+)
 
 extra["excludePackages"] = excludePackage
 tasks.jacocoTestReport {
