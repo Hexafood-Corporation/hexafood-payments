@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.UUID
 import org.assertj.core.api.Assertions.assertThat
+import java.math.BigDecimal
 
 class PaymentEntityTest {
 
@@ -25,7 +26,8 @@ class PaymentEntityTest {
             clientId = clientId,
             status = status,
             statusUpdatedAt = statusUpdatedAt,
-            paymentMethod = paymentMethod
+            paymentMethod = paymentMethod,
+            totalValue = BigDecimal.valueOf(100.00)
         )
 
         val payment = paymentEntity.toPayment()
@@ -44,7 +46,8 @@ class PaymentEntityTest {
         val paymentEntity = PaymentEntity(
             order = "123",
             clientId = 1,
-            paymentMethod = "PIX"
+            paymentMethod = "PIX",
+            totalValue = BigDecimal.valueOf(100.00)
         )
 
         assertThat(paymentEntity.paymentId).isNull()
@@ -60,21 +63,24 @@ class PaymentEntityTest {
             id = 1,
             order = "1",
             clientId = 1L,
-            paymentMethod = PaymentMethod.CASH.toString()
+            paymentMethod = PaymentMethod.CASH.toString(),
+            totalValue = BigDecimal.valueOf(100.00)
         )
 
         val paymentEntity2 = PaymentEntity(
             id = 1,
             order = "1",
             clientId = 1L,
-            paymentMethod = PaymentMethod.CASH.toString()
+            paymentMethod = PaymentMethod.CASH.toString(),
+            totalValue = BigDecimal.valueOf(100.00)
         )
 
         val paymentEntity3 = PaymentEntity(
             id = 2,
             order = "2",
             clientId = 2L,
-            paymentMethod = PaymentMethod.CREDIT_CARD.toString()
+            paymentMethod = PaymentMethod.CREDIT_CARD.toString(),
+            totalValue = BigDecimal.valueOf(100.00)
         )
 
         assertThat(paymentEntity1).isEqualTo(paymentEntity1)
