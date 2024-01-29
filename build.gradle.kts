@@ -103,11 +103,9 @@ tasks.jacocoTestCoverageVerification {
 
 sonarqube {
     properties {
-        property("sonar.projectKey", "viniciusnicolaus_hexafood-payments")
-        property("sonar.organization", "viniciusnicolaus")
-        property("sonar.host.url", "https://sonarcloud.io") // ajuste para a URL do seu servidor SonarQube ou SonarCloud
-        property("sonar.login", "SONAR_TOKEN") // ajuste para o token do seu projeto no SonarQube ou SonarCloud
-        property("sonar.coverage.jacoco.xmlReportPaths", "build/jacoco/test/jacocoTestReport.xml")
+        property("sonar.sources", "src/main")
+        property("sonar.scm.disabled", "True")
+        property("sonar.coverage.exclusions", excludePackage)
     }
 }
 
