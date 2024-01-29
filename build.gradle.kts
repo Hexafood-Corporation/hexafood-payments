@@ -11,6 +11,8 @@ plugins {
 group = "br.com.fiap"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
+val awsSpringVersion = "3.0.1"
+
 
 repositories {
     mavenCentral()
@@ -27,6 +29,17 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     runtimeOnly("com.h2database:h2")
     implementation("javax.validation:validation-api:2.0.1.Final")
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-sqs")
+    implementation("org.springframework:spring-messaging:6.0.11")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-aws-messaging:2.2.6.RELEASE")
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("io.awspring.cloud:spring-cloud-aws-dependencies:$awsSpringVersion")
+    }
 }
 
 tasks.withType<KotlinCompile> {
@@ -36,6 +49,6 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
+//tasks.withType<Test> {
+//    useJUnitPlatform()
+//}

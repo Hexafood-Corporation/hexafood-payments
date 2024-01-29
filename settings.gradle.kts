@@ -1,1 +1,1 @@
-rootProject.name = "TechChallenge"
+rootProject.name = "hexafood-payments"

@@ -1,13 +1,53 @@
-version: '3.1'
+version: "3.8"
 
 services:
-
-  db:
+  postgres-api-payments:
     image: postgres:15.3-alpine3.18
     restart: always
     ports:
       - "5432:5432"
+    env_file:
+      - .env
+    networks:
+      - hexafood-bridge
+  api-payments:
+    container_name: hexafood-api-payments
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    depends_on:
+        - postgres-api-payments
+        - localstack
+    networks:
+    - hexafood-bridge
+  localstack:
+    container_name: localstack
+    hostname: localstack
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      - AWS_ACCESS_KEY_ID=dummy
+      - AWS_SECRET_ACCESS_KEY=dummy
+      - AWS_DEFAULT_REGION=us-east-1
+      - DEBUG=1
+      - LOCALSTACK_PERSISTENCE=1
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - SQS_ENDPOINT_STRATEGY=standard
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "./docker:/docker-entrypoint-initaws.d"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./docker/start-localstack.sh:/etc/localstack/init/ready.d/start-localstack.sh"
+    networks:
+      - hexafood-bridge
+
+networks:
+  hexafood-bridge:
+    driver: bridge
