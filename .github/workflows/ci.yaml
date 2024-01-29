@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, edited ]
+  workflow_dispatch:
+
+jobs:
+  conventional-commits:
+    name: Check commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Conventional commits check
+        uses: taskmedia/action-conventional-commits@v1.1.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          skip_merge: true
+          skip_revert: true
+          types: 'ci|feat|fix|docs|release|chore|style|build|revert|refactor|perf|test|auto'
+
+  validate-pr-title:
+    name: Validate PR Title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Regex
+        id: regex
+        uses: actions/github-script@v5
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const regex = /^(ci|fix|docs|release|chore|style|build|revert|refactor|perf|test|feat)(\([\w-_]+\))?!?: \w.+$/g;
+            const title = process.env.PR_TITLE;
+            const isValid = regex.test(title);
+            core.setOutput('valid', isValid);
+
+      - name: Check if PR title is valid
+        run: |
+          if [ "${{ steps.regex.outputs.valid }}" == "false" ]; then
+            echo "PR title is invalid. Please follow the pattern: <type>(<scope>): <description>";
+            exit 1;
+          fi
