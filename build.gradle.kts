@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.1.0"
     id("io.spring.dependency-management") version "1.1.0"
+    id("jacoco")
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
     kotlin("plugin.jpa") version "1.8.21"
@@ -24,6 +25,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+    testImplementation("org.testng:testng:7.1.0")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -33,7 +35,8 @@ dependencies {
     implementation("org.springframework:spring-messaging:6.0.11")
 
     implementation("org.springframework.cloud:spring-cloud-starter-aws-messaging:2.2.6.RELEASE")
-
+    testImplementation("io.kotest:kotest-runner-junit5:5.7.2")
+    testImplementation("io.mockk:mockk:1.13.9")
 }
 
 dependencyManagement {
@@ -49,6 +52,48 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-//tasks.withType<Test> {
-//    useJUnitPlatform()
-//}
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.test {
+    finalizedBy("jacocoTestCoverageVerification")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+val excludePackage: Iterable<String> = listOf()
+
+extra["excludePackages"] = excludePackage
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    classDirectories.setFrom(
+        sourceSets.main.get().output.asFileTree.matching {
+            exclude(excludePackage)
+        }
+    )
+}
+
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.jacocoTestReport)
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.3.toBigDecimal()
+                counter = "LINE"
+            }
+        }
+    }
+    classDirectories.setFrom(
+        sourceSets.main.get().output.asFileTree.matching {
+            exclude(excludePackage)
+        }
+    )
+}
