@@ -10,6 +10,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class PaymentPersistenceImplTest {
@@ -27,7 +28,8 @@ class PaymentPersistenceImplTest {
             clientId = 1,
             status = PaymentStatus.IN_PROCESS.toString(),
             statusUpdatedAt = LocalDateTime.now(),
-            paymentMethod = PaymentMethod.PIX.toString()
+            paymentMethod = PaymentMethod.PIX.name,
+            totalValue = BigDecimal.valueOf(100.00)
         )
         every { paymentRepository.findByPaymentId(paymentId) } returns paymentEntity
 
@@ -48,7 +50,9 @@ class PaymentPersistenceImplTest {
                 clientId = 1,
                 status = PaymentStatus.IN_PROCESS.toString(),
                 statusUpdatedAt = LocalDateTime.now(),
-                paymentMethod = PaymentMethod.PIX.toString()
+                paymentMethod = PaymentMethod.PIX.toString(),
+                totalValue = BigDecimal.valueOf(100.00)
+
             ),
             PaymentEntity(
                 id = 2,
@@ -57,7 +61,9 @@ class PaymentPersistenceImplTest {
                 clientId = 2,
                 status = PaymentStatus.APPROVED.toString(),
                 statusUpdatedAt = LocalDateTime.now(),
-                paymentMethod = PaymentMethod.CASH.toString()
+                paymentMethod = PaymentMethod.CASH.toString(),
+                totalValue = BigDecimal.valueOf(100.00)
+
             )
         )
         every { paymentRepository.findAll() } returns payments
@@ -77,7 +83,9 @@ class PaymentPersistenceImplTest {
             clientId = 1,
             status = PaymentStatus.IN_PROCESS.toString(),
             statusUpdatedAt = LocalDateTime.now(),
-            paymentMethod = PaymentMethod.PIX.toString()
+            paymentMethod = PaymentMethod.PIX.toString(),
+            totalValue = BigDecimal.valueOf(100.00)
+
         )
         every { paymentRepository.save(any()) } returns payment
 
@@ -97,7 +105,9 @@ class PaymentPersistenceImplTest {
             clientId = 1,
             status = PaymentStatus.IN_PROCESS.toString(),
             statusUpdatedAt = LocalDateTime.now(),
-            paymentMethod = PaymentMethod.PIX.toString()
+            paymentMethod = PaymentMethod.PIX.toString(),
+            totalValue = BigDecimal.valueOf(100.00)
+
         )
         every { paymentRepository.findByPaymentId(paymentId) } returns paymentEntity
         every { paymentRepository.save(any()) } returns paymentEntity
@@ -117,7 +127,9 @@ class PaymentPersistenceImplTest {
             clientId = 1,
             status = PaymentStatus.IN_PROCESS.toString(),
             statusUpdatedAt = LocalDateTime.now(),
-            paymentMethod = PaymentMethod.PIX.toString()
+            paymentMethod = PaymentMethod.PIX.toString(),
+            totalValue = BigDecimal.valueOf(100.00)
+
         )
         every { paymentRepository.findByPaymentId(paymentId) } returns paymentEntity
         every { paymentRepository.save(any()) } returns paymentEntity
@@ -138,7 +150,9 @@ class PaymentPersistenceImplTest {
                 clientId = 1,
                 status = PaymentStatus.APPROVED.toString(),
                 statusUpdatedAt = LocalDateTime.now(),
-                paymentMethod = PaymentMethod.PIX.toString()
+                paymentMethod = PaymentMethod.PIX.toString(),
+                totalValue = BigDecimal.valueOf(100.00)
+
             ),
             PaymentEntity(
                 id = 2,
@@ -147,7 +161,9 @@ class PaymentPersistenceImplTest {
                 clientId = 2,
                 status = PaymentStatus.APPROVED.toString(),
                 statusUpdatedAt = LocalDateTime.now(),
-                paymentMethod = PaymentMethod.CASH.toString()
+                paymentMethod = PaymentMethod.CASH.toString(),
+                totalValue = BigDecimal.valueOf(100.00)
+
             )
         )
         every { paymentRepository.findByStatus(status.name) } returns payments

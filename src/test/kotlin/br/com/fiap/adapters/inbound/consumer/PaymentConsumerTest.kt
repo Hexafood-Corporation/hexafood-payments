@@ -8,6 +8,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 
 class PaymentConsumerTest {
 
@@ -22,7 +23,7 @@ class PaymentConsumerTest {
         val order = CreatePaymentRequest(
             id = 1,
             codigoPedido = "pedido123",
-            valorTotal = 100.0,
+            valorTotal = BigDecimal.valueOf(100.00),
             status = "IN_PROCESS",
             cliente = clienteMockk
         )

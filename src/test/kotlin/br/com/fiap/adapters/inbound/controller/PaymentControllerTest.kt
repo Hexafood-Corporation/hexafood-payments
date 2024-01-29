@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class PaymentControllerTest {
@@ -60,7 +61,7 @@ class PaymentControllerTest {
         val createPaymentRequest = CreatePaymentRequest(
             id = 1L,
             codigoPedido = "12345",
-            valorTotal = 100.00,
+            valorTotal = BigDecimal.valueOf(100.00),
             status = PaymentStatus.IN_PROCESS.toString(),
             cliente = Cliente(
                 id = 1L,
