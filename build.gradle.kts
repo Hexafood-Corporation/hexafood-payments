@@ -30,6 +30,9 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("io.awspring.cloud:spring-cloud-aws-starter-sqs")
+    implementation("org.springframework:spring-messaging:6.0.11")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-aws-messaging:2.2.6.RELEASE")
 
 }
 
@@ -49,5 +52,3 @@ tasks.withType<KotlinCompile> {
 //tasks.withType<Test> {
 //    useJUnitPlatform()
 //}
-
-
