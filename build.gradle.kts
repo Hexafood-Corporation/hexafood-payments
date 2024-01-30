@@ -4,7 +4,7 @@ plugins {
     id("org.springframework.boot") version "3.1.0"
     id("io.spring.dependency-management") version "1.1.0"
     id("jacoco")
-    id("org.sonarqube") version "3.5.0.2730"
+    id("org.sonarqube") version "4.4.1.3373"
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
     kotlin("plugin.jpa") version "1.8.21"
@@ -104,9 +104,9 @@ tasks.jacocoTestCoverageVerification {
 
 sonarqube {
     properties {
-        property("sonar.sources", "src/main")
-        property("sonar.scm.disabled", "True")
-        property("sonar.coverage.exclusions", excludePackage)
+        property("sonar.projectKey", "stesuzart_hexafood-payments")
+        property("sonar.organization", "stesuzart")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
 
