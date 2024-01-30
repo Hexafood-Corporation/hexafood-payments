@@ -101,6 +101,7 @@ tasks.jacocoTestCoverageVerification {
     )
 }
 
+
 sonarqube {
     properties {
         property("sonar.sources", "src/main")
