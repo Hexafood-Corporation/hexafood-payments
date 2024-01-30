@@ -127,3 +127,17 @@ class PaymentProducer(
         queueMessagingTemplate.convertAndSend<Any>(queueName, message) //send to queue
     }
 }
+```
+
+a mensagem publicada na fila 'pagamento_processado':
+
+```json
+{
+  "id_pagamento": "4ecddff8-7aee-43ac-ba58-e32d5d9d5030",
+  "id_pedido": 1,
+  "status": "APROVADO",
+  "update_at" : "",
+  "metodo_pagamento": "PIX"
+}
+
+```
