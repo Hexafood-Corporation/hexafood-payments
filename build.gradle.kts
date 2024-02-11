@@ -107,9 +107,6 @@ sonarqube {
         property("sonar.projectKey", "lucassouzati_hexafood-payments")
         property("sonar.organization", "lucassouzati")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.sources", "src/main")
-        property("sonar.scm.disabled", "True")
-//        property("sonar.coverage.exclusions", excludePackage)
     }
 }
 
