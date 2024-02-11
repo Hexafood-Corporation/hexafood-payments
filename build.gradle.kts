@@ -109,7 +109,7 @@ sonarqube {
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.sources", "src/main")
         property("sonar.scm.disabled", "True")
-        property("sonar.coverage.exclusions", excludePackage)
+//        property("sonar.coverage.exclusions", excludePackage)
     }
 }
 
