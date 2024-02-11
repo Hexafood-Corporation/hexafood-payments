@@ -58,7 +58,7 @@ jacoco {
 }
 
 tasks.test {
-    finalizedBy("jacocoTestCoverageVerification")
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.withType<Test> {
@@ -72,6 +72,7 @@ val excludePackage: Iterable<String> = listOf(
 extra["excludePackages"] = excludePackage
 
 tasks.jacocoTestReport {
+    dependsOn(tasks.test)
     reports {
         xml.required = true
     }
