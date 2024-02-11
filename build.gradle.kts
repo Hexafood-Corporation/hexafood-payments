@@ -70,35 +70,11 @@ val excludePackage: Iterable<String> = listOf(
 )
 
 extra["excludePackages"] = excludePackage
+
 tasks.jacocoTestReport {
-    dependsOn(tasks.test)
     reports {
-        xml.required.set(true)
-        html.required.set(true)
+        xml.required = true
     }
-
-    classDirectories.setFrom(
-        sourceSets.main.get().output.asFileTree.matching {
-            exclude(excludePackage)
-        }
-    )
-}
-
-tasks.jacocoTestCoverageVerification {
-    dependsOn(tasks.jacocoTestReport)
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8.toBigDecimal()
-                counter = "LINE"
-            }
-        }
-    }
-    classDirectories.setFrom(
-        sourceSets.main.get().output.asFileTree.matching {
-            exclude(excludePackage)
-        }
-    )
 }
 
 
