@@ -38,7 +38,7 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew build sonarqube --info --stacktrace
+        run: ./gradlew build test sonarqube --info --stacktrace
   conventional-commits:
     name: Check commits
     runs-on: ubuntu-latest
