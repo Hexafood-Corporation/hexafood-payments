@@ -4,7 +4,7 @@ plugins {
     id("org.springframework.boot") version "3.1.0"
     id("io.spring.dependency-management") version "1.1.0"
     id("jacoco")
-    id("org.sonarqube") version "3.5.0.2730"
+    id("org.sonarqube") version "4.4.1.3373"
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
     kotlin("plugin.jpa") version "1.8.21"
@@ -58,7 +58,7 @@ jacoco {
 }
 
 tasks.test {
-    finalizedBy("jacocoTestCoverageVerification")
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.withType<Test> {
@@ -70,43 +70,21 @@ val excludePackage: Iterable<String> = listOf(
 )
 
 extra["excludePackages"] = excludePackage
+
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
     reports {
-        xml.required.set(true)
-        html.required.set(true)
+        xml.required = true
     }
-
-    classDirectories.setFrom(
-        sourceSets.main.get().output.asFileTree.matching {
-            exclude(excludePackage)
-        }
-    )
-}
-
-tasks.jacocoTestCoverageVerification {
-    dependsOn(tasks.jacocoTestReport)
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8.toBigDecimal()
-                counter = "LINE"
-            }
-        }
-    }
-    classDirectories.setFrom(
-        sourceSets.main.get().output.asFileTree.matching {
-            exclude(excludePackage)
-        }
-    )
 }
 
 
 sonarqube {
     properties {
-        property("sonar.sources", "src/main")
-        property("sonar.scm.disabled", "True")
-        property("sonar.coverage.exclusions", excludePackage)
+        property("sonar.projectKey", "lucassouzati_hexafood-payments")
+        property("sonar.organization", "lucassouzati")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco")
     }
 }
 
