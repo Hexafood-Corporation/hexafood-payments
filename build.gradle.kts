@@ -84,6 +84,7 @@ sonarqube {
         property("sonar.projectKey", "lucassouzati_hexafood-payments")
         property("sonar.organization", "lucassouzati")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco")
     }
 }
 
