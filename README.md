@@ -147,6 +147,10 @@ A fim de atender aos critérios de Qualidade de Software do desafio, foi impleme
 
 <img width="500" alt="Captura de Tela 2024-02-16 às 15 27 05" src="https://github.com/Hexafood-Corporation/hexafood-payments/assets/15147926/49475609-85e0-421d-8dca-6c6bc25ba7ba">
 
+E na imagem a seguir segue um relatório detalhado do código deste microsserviço, que fica disponível no próprio portal do SonarCloud:
+
+
+<img width="500" alt="quality-gate-hexafood-payments" src="https://github.com/Hexafood-Corporation/hexafood-payments/assets/15147926/38500c5f-a50a-48e3-839a-19b2f67d47e5">
 
 
 
