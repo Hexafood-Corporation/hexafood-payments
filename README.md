@@ -141,3 +141,12 @@ a mensagem publicada na fila 'pagamento_processado':
 }
 
 ```
+
+🔌 Cobertura de testes com SonarCloud
+A fim de atender aos critérios de Qualidade de Software do desafio, foi implementao testes unitários neste microsserviço, e configurado a pipeline para executar uma verificação a cada push na branch main. Dessa forma, caso o código está com menos de 80% de cobertura de testes, ele é rejeitado. Na imagem seguir, temos um exemplo de report anexado a PR informando a análise do SonarCloud:
+
+<img width="500" alt="Captura de Tela 2024-02-16 às 15 27 05" src="https://github.com/Hexafood-Corporation/hexafood-payments/assets/15147926/49475609-85e0-421d-8dca-6c6bc25ba7ba">
+
+
+
+
